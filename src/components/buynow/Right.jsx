@@ -3,6 +3,7 @@ import { useState } from "react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { loadStripe } from "@stripe/stripe-js";
+import { BASE_URL } from "../../redux/apiConfig";
 
 const Right = ({ item }) => {
   const [val, setVal] = useState(false);
@@ -19,7 +20,7 @@ const Right = ({ item }) => {
   console.log(item);
 
   // payment integeration
-  const makePayment = async () => { 
+  const makePayment = async () => {
     const stripe = await loadStripe(
       "pk_test_51OwgfASBZRhVBRtafeFiaDN38gSs2kJHJ1u1Qvh3H83lLKC3Sz8VXnK2P9mE72DkdxWlw9JlSlrM5Vho9NETLiI000sZAcvYl5"
     );
@@ -29,14 +30,11 @@ const Right = ({ item }) => {
     const headers = {
       "Content-Type": "application/json",
     };
-    const response = await fetch(
-      "http://localhost:8000/api/create-checkout-session",
-      {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
-      }
-    );
+    const response = await fetch(`${BASE_URL}/api/create-checkout-session`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
     const session = await response.json();
     const result = stripe.redirectToCheckout({
       sessionId: session.id,
@@ -63,7 +61,7 @@ const Right = ({ item }) => {
           Subtotal ({item.length} items):
           <span style={{ fontWeight: "700" }}> ₹{calculateTotalPrice()}</span>
         </h3>
-        <button className="rightbuy_btn"  onClick={makePayment}>
+        <button className="rightbuy_btn" onClick={makePayment}>
           Proceed to Buy
         </button>
 
