@@ -1,3 +1,7 @@
+Here I provide only client side code and for backend/server side code,,i request you to just checkout my amazoneClone repo
+
+For Demo--> https://amzc.netlify.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
